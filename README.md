@@ -2,6 +2,20 @@
 
 An automated Docker environment for Python development using `nodemon` to watch for file changes.
 
+## Development-time use
+
+Docker (including `docker-compose`) must be installed. Likely, you have `git` already installed as well. Use whatever code editor you like. Run:
+
+```
+docker-compose up
+```
+
+If you change the name of the root Python package (and you probably will unless your project is called, "hello, world"), update `docker-compose.yml` and the Dockerfile. Additional libraries may be added using Docker volumes. After making changes, run:
+
+```
+docker-compose build
+```
+
 ## Rationale
 
 This is a wild hack.
@@ -20,11 +34,12 @@ My goals are as follows:
  - **Useful flexibility.** Adding another service, whether to do something to the Python, or to do something around it, should be easy and as unconstrained as possible. Add another container with separate concerns without much additional overhead or
    complicated configuration.
 
-## Development-time use
+## What's going on
 
-Docker (including `docker-compose`) must be installed. Likely, you have `git` already installed as well. Use whatever code editor you like. Run:
+The simple description provided here should help to understand what's going on, so that you can modify this project to meet your needs.
 
-```
-docker-compose up
-```
-
+1. The primary `Dockerfile` for the Python script to run as the entry point is in `assets/dockerfiles`.
+1. The `docker-compose.yml` automator runs the container for Python.
+1. The Python source is mounted as a volume on the Docker container so the local file system matches what's in the run-state Python container.
+1. The Python container, indended to be the runtime, installs `node`, then `npm`, then `nodemon`.
+1. On run, `nodemon` watches for file system changes and re-runs Python when they occur.
