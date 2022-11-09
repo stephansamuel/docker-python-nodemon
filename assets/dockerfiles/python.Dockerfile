@@ -7,9 +7,6 @@ RUN apk add --no-cache nodejs npm
 RUN mkdir -p /opt/node
 WORKDIR /opt/node
 
-# This is a cache-bust line in case you need it. Taken from https://stackoverflow.com/a/58801213/5583468
-#ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache
-
 # Copy in the package.json file with any dev dependencies.
 COPY ./assets/packaging/package.json /opt/node
 # Update the node installation with dependencies from package.json using npm.
