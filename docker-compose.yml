@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+
+  python:
+    build:
+      context: .
+      dockerfile: ./assets/dockerfiles/python.Dockerfile
+    volumes:
+      - ./hello_world:/usr/src/app
